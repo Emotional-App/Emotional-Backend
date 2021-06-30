@@ -16,6 +16,7 @@ namespace EmotionalBackend
     public class Startup
     {
         private readonly string corsPolicy = "AllowOrigins";
+        private readonly string[] origins = { "http://localhost:3000" };
 
         public Startup(IConfiguration configuration)
         {
@@ -32,7 +33,7 @@ namespace EmotionalBackend
                 options.AddPolicy(corsPolicy,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins(origins);
                         builder.AllowAnyHeader();
                         builder.AllowAnyMethod();
                     });
