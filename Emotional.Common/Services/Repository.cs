@@ -22,13 +22,13 @@ namespace Emotional.Common.Services
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChangesAsync();
+            CommitChanges();
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
             _context.Set<T>().AddRange(entities);
-            _context.SaveChangesAsync();
+            CommitChanges();
         }
 
         public T Find(Expression<Func<T, bool>> expression)
@@ -36,12 +36,17 @@ namespace Emotional.Common.Services
             return _context.Set<T>().Where(expression).FirstOrDefault();
         }
 
+        public List<T> FindMany(Expression<Func<T, bool>> expression)
+        {
+            return _context.Set<T>().Where(expression)?.ToList();
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public T GetById(Guid id)
         {
             return _context.Set<T>().Find(id);
         }
@@ -49,12 +54,17 @@ namespace Emotional.Common.Services
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
-            _context.SaveChangesAsync();
+            CommitChanges();
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
+            CommitChanges();
+        }
+
+        public void CommitChanges()
+        {
             _context.SaveChangesAsync();
         }
     }

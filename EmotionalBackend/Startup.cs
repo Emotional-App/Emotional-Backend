@@ -60,6 +60,7 @@ namespace EmotionalBackend
             });
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IEmotionService, EmotionService>();
 
             services.AddScoped<IUserAppContext, UserAppContext>();
             services.AddSingleton<IPasswordStorage, PasswordStorage>();

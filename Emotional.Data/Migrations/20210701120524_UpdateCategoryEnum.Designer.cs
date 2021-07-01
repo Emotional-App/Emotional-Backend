@@ -4,14 +4,16 @@ using Emotional.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Emotional.Data.Migrations
 {
     [DbContext(typeof(EmotionalDbContext))]
-    partial class EmotionalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210701120524_UpdateCategoryEnum")]
+    partial class UpdateCategoryEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

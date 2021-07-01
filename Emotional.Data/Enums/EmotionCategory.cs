@@ -6,6 +6,6 @@ namespace Emotional.Data.Enums
 {
     public enum EmotionCategory : byte
     {
-        HAPPY, PEACEFUL, NORMAL, SAD, FEAR, ANGRY, STRESSFUL, INLOVE
+        ANGRY, FEAR, STRESSFUL, SAD, NORMAL, PEACEFUL, HAPPY, INLOVE
     }
 }

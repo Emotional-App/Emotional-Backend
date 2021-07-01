@@ -1,6 +1,8 @@
 ﻿using Emotional.Data.Entities;
+using Emotional.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Emotional.Data.Configurations
 {
@@ -14,6 +16,8 @@ namespace Emotional.Data.Configurations
 
             builder.Property(x => x.MusicUrl).IsRequired();
             builder.Property(x => x.Category).IsRequired();
+            builder.Property(e => e.Category).HasConversion(v => v.ToString(),
+                v => (EmotionCategory)Enum.Parse(typeof(EmotionCategory), v));
         }
     }
 }
