@@ -8,7 +8,7 @@ namespace Emotional.Common.Auth
     {
         public string Token { get; set; }
         public long Expires { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string UserId { get; set; }
     }
 }

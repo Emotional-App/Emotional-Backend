@@ -7,6 +7,7 @@ namespace Emotional.Api.Utils
 {
     public class Constants
     {
+        public const string CorsPolicies = "AllowOrigins";
         public const string SqlConnectionString = "Sql:ConnectionString";
     }
 }
