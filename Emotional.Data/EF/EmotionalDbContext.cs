@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Emotional.Data.Entities;
 using Emotional.Data.Configurations;
+using Emotional.Data.Extensions;
 
 namespace Emotional.Data.EF
 {
@@ -16,6 +17,8 @@ namespace Emotional.Data.EF
             builder.ApplyConfiguration(new DiaryConfiguration());
             builder.ApplyConfiguration(new MusicConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+
+            builder.Seed();
         }
 
         public DbSet<Emotion> Emotions { set; get; }

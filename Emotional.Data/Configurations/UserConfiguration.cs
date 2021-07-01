@@ -14,7 +14,7 @@ namespace Emotional.Data.Configurations
 
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Email).IsRequired().IsUnicode(false).HasMaxLength(50);
-            builder.Property(x => x.Password).IsRequired();
+            builder.Property(x => x.HashPassword).IsRequired();
         }
     }
 }

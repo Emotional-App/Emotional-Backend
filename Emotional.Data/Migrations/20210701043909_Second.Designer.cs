@@ -4,14 +4,16 @@ using Emotional.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Emotional.Data.Migrations
 {
     [DbContext(typeof(EmotionalDbContext))]
-    partial class EmotionalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210701043909_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +25,8 @@ namespace Emotional.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<byte>("Category")
                         .ValueGeneratedOnAdd()
@@ -45,23 +48,14 @@ namespace Emotional.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Diaries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("64c73e39-08f4-47e6-bf8f-2b704bbc93ad"),
-                            Category = (byte)0,
-                            Content = "Today is a good day.",
-                            CreatedOn = new DateTime(2021, 7, 1, 5, 26, 48, 398, DateTimeKind.Utc).AddTicks(8520),
-                            UserId = new Guid("2eb554c1-28cb-4629-97da-960753f13234")
-                        });
                 });
 
             modelBuilder.Entity("Emotional.Data.Entities.Emotion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<byte>("Category")
                         .ValueGeneratedOnAdd()
@@ -82,23 +76,14 @@ namespace Emotional.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Emotions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e037bbf0-088e-46cc-9349-f30e6feeac9c"),
-                            Category = (byte)1,
-                            CreatedOn = new DateTime(2021, 7, 1, 5, 26, 48, 398, DateTimeKind.Utc).AddTicks(6616),
-                            Percentage = 70f,
-                            UserId = new Guid("2eb554c1-28cb-4629-97da-960753f13234")
-                        });
                 });
 
             modelBuilder.Entity("Emotional.Data.Entities.Music", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<byte>("Category")
                         .HasColumnType("tinyint");
@@ -113,22 +98,14 @@ namespace Emotional.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Musics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("98339f19-04e0-4622-8e37-f60d8d3608b7"),
-                            Category = (byte)1,
-                            MusicUrl = "https://freesound.org/data/previews/554/554415_2975501-lq.mp3",
-                            Name = "Peaceful-sound-001"
-                        });
                 });
 
             modelBuilder.Entity("Emotional.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
@@ -139,26 +116,17 @@ namespace Emotional.Data.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("HashPassword")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2eb554c1-28cb-4629-97da-960753f13234"),
-                            Email = "Emotional@gmail.com",
-                            HashPassword = "AQAAAAEAACcQAAAAEBdVbiJm41NS4ZQTD1CMGRX7PzhoEVBUXtPGEwtGPha57Ox56hUh6MvIKIJg/qjhOw==",
-                            Name = "Emotional"
-                        });
                 });
 
             modelBuilder.Entity("Emotional.Data.Entities.Diary", b =>

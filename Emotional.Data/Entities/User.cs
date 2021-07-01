@@ -9,7 +9,7 @@ namespace Emotional.Data.Entities
         public Guid Id { set; get; }
         public string Name { set; get; }
         public string Email { set; get; }
-        public string Password { set; get; }
+        public string HashPassword { set; get; }
         public string AvatarUrl { set; get; }
 
         public List<Emotion> Emotions { set; get; }
