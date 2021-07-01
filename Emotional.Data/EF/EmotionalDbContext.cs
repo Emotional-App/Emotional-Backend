@@ -24,6 +24,7 @@ namespace Emotional.Data.EF
         public DbSet<Emotion> Emotions { set; get; }
         public DbSet<Diary> Diaries { set; get; }
         public DbSet<Music> Musics { set; get; }
+        public DbSet<User> Users { set; get; }
     }
 
 }
