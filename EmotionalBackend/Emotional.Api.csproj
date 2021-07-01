@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Emotional.Common\Emotional.Common.csproj" />
     <ProjectReference Include="..\Emotional.Data\Emotional.Data.csproj" />
   </ItemGroup>

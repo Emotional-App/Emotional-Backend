@@ -1,6 +1,10 @@
+using Emotional.Api.Domain.Contracts;
+using Emotional.Api.Domain.Services;
 using Emotional.Api.Utils;
 using Emotional.Common.Auth;
+using Emotional.Common.Contracts;
 using Emotional.Common.Security;
+using Emotional.Common.Services;
 using Emotional.Data.EF;
 using Emotional.Data.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +21,6 @@ namespace EmotionalBackend
 {
     public class Startup
     {
-        private readonly string corsPolicy = "AllowOrigins";
         private readonly string[] origins = { "http://localhost:3000" };
 
         public Startup(IConfiguration configuration)
@@ -31,7 +34,7 @@ namespace EmotionalBackend
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(corsPolicy,
+                options.AddPolicy(Constants.CorsPolicies,
                     builder =>
                     {
                         builder.WithOrigins(origins);
@@ -42,6 +45,8 @@ namespace EmotionalBackend
 
             services.AddDbContext<EmotionalDbContext>(options => 
                 options.UseSqlServer(Configuration[Constants.SqlConnectionString]));
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddJwt(Configuration);
 
@@ -54,7 +59,10 @@ namespace EmotionalBackend
                 return func;
             });
 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             services.AddScoped<IUserAppContext, UserAppContext>();
+            services.AddSingleton<IPasswordStorage, PasswordStorage>();
 
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson();
