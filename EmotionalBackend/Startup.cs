@@ -54,6 +54,7 @@ namespace EmotionalBackend
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IEmotionService, EmotionService>();
             services.AddScoped<IDiaryService, DiaryService>();
+            services.AddScoped<IMusicService, MusicService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

@@ -10,7 +10,7 @@ namespace Emotional.Common.Contracts
     public interface IRepository<T>
     {
         T GetById(Guid id);
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         T Find(Expression<Func<T, bool>> expression);
         List<T> FindMany(Expression<Func<T, bool>> expression);
         void Add(T entity);
