@@ -16,6 +16,11 @@ namespace Emotional.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Musics");
 
+            migrationBuilder.DeleteData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: new Guid("10713172-9b96-4e83-bab8-45d3c4c23b96"));
+
             migrationBuilder.CreateTable(
                 name: "Musics",
                 columns: table => new
