@@ -9,5 +9,6 @@ namespace Emotional.Data.Entities
         public string Name { set; get; }
         public string MusicUrl { set; get; }
         public EmotionCategory Category { set; get; }
+        public string CategoryName { set; get; }
     }
 }

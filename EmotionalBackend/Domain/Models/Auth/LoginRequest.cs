@@ -9,6 +9,5 @@ namespace Emotional.Api.Domain.Models.Auth
     {
         public string Email { set; get; }
         public string Password { set; get; }
-        public bool RememberMe { set; get; }
     }
 }

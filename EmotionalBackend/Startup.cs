@@ -50,6 +50,10 @@ namespace EmotionalBackend
 
             services.AddJwt(Configuration);
 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IEmotionService, EmotionService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             Func<IServiceProvider, IPrincipal> getPrincipal =
                 (sp) => sp.GetService<IHttpContextAccessor>().HttpContext.User;
 
@@ -58,8 +62,6 @@ namespace EmotionalBackend
                 Func<IPrincipal> func = () => getPrincipal(sp);
                 return func;
             });
-
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddScoped<IUserAppContext, UserAppContext>();
             services.AddSingleton<IPasswordStorage, PasswordStorage>();

@@ -2,13 +2,8 @@
 using Emotional.Api.Domain.Models.Auth;
 using Emotional.Common.Auth;
 using Emotional.Common.Contracts;
-using Emotional.Data.EF;
 using Emotional.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Emotional.Api.Domain.Services
 {

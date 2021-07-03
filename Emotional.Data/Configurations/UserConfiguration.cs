@@ -13,7 +13,7 @@ namespace Emotional.Data.Configurations
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Email).IsRequired().IsUnicode(false).HasMaxLength(50);
+            builder.Property(x => x.Email).IsRequired().IsUnicode(false).HasMaxLength(50); // Todo: Make email unique
             builder.Property(x => x.HashPassword).IsRequired();
         }
     }

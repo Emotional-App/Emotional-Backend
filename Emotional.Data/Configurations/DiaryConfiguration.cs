@@ -2,6 +2,7 @@
 using Emotional.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Emotional.Data.Configurations
 {
@@ -15,7 +16,6 @@ namespace Emotional.Data.Configurations
             builder.HasOne(x => x.User).WithMany(x => x.Diaries).HasForeignKey(x => x.UserId);
 
             builder.Property(x => x.Content).IsRequired();
-            builder.Property(x => x.Category).IsRequired().HasDefaultValue(EmotionCategory.PEACEFUL);
         }
     }
 }

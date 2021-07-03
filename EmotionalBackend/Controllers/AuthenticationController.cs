@@ -18,14 +18,10 @@ namespace Emotional.Api.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly IUserAppContext _userAppContext;
 
-        public AuthenticationController(
-              IAuthenticationService authenticationService,
-              IUserAppContext userAppContext)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
-            _userAppContext = userAppContext;
         }
 
         /// <summary>

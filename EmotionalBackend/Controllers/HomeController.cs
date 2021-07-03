@@ -13,7 +13,7 @@ namespace Emotional.Api.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Content("Hi, you are calling an api from Emotional!");
+            return Content("Hi, you are calling api from Emotional!");
         }
     }
 }

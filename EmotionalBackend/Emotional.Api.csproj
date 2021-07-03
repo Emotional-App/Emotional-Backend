@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Emotional.Common\Emotional.Common.csproj" />
-    <ProjectReference Include="..\Emotional.Data\Emotional.Data.csproj" />
   </ItemGroup>
 
 
