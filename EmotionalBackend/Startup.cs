@@ -1,3 +1,4 @@
+using Diaryal.Api.Domain.Services;
 using Emotional.Api.Domain.Contracts;
 using Emotional.Api.Domain.Services;
 using Emotional.Api.Utils;
@@ -52,6 +53,8 @@ namespace EmotionalBackend
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IEmotionService, EmotionService>();
+            services.AddScoped<IDiaryService, DiaryService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             Func<IServiceProvider, IPrincipal> getPrincipal =

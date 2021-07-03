@@ -1,4 +1,5 @@
 ﻿using Emotional.Api.Domain.Contracts;
+using Emotional.Api.Domain.Models.Diaries;
 using Emotional.Api.Domain.Models.Emotion;
 using Emotional.Api.Domain.Models.Enums;
 using Emotional.Common.Security;
@@ -7,49 +8,50 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace Emotional.Api.Controllers
 {
-    [Route("api/emotion")]
+    [Route("api/diary")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class EmotionController : Controller
+    public class DiaryController : Controller
     {
-        private readonly IEmotionService _emotionService;
+        private readonly IDiaryService _diaryService;
         private readonly IUserAppContext _userAppContext;
 
-        public EmotionController(IEmotionService emotionService, IUserAppContext userAppContext)
+        public DiaryController(IDiaryService diaryService, IUserAppContext userAppContext)
         {
-            _emotionService = emotionService;
+            _diaryService = diaryService;
             _userAppContext = userAppContext;
         }
 
         [HttpGet("today")]
-        public IActionResult GetTodayEmotions()
+        public IActionResult GetTodayDiaries()
         {
-            var emotions = _emotionService.GetEmotions(Duration.TODAY, _userAppContext.CurrentUserId);
+            var diaries = _diaryService.GetDiaries(Duration.TODAY, _userAppContext.CurrentUserId);
 
-            return Ok(new { Success = true, Emotions = emotions });
+            return Ok(new { Success = true, Diaries = diaries });
         }
 
         [HttpGet("lastweek")]
-        public IActionResult GetLastWeekEmotions()
+        public IActionResult GetLastWeekDiaries()
         {
-            var emotions = _emotionService.GetEmotions(Duration.LASTWEEK, _userAppContext.CurrentUserId);
+            var diaries = _diaryService.GetDiaries(Duration.LASTWEEK, _userAppContext.CurrentUserId);
 
-            return Ok(new { Success = true, Emotions = emotions });
+            return Ok(new { Success = true, Diaries = diaries });
         }
 
-        [HttpGet("lastmonth")]
-        public IActionResult GetLastMonthEmotions()
+        [HttpGet("all")]
+        public IActionResult GetAll()
         {
-            var emotions = _emotionService.GetEmotions(Duration.LASTMONTH, _userAppContext.CurrentUserId);
+            var diaries = _diaryService.GetDiaries(Duration.ALLTIME, _userAppContext.CurrentUserId);
 
-            return Ok(new { Success = true, Emotions = emotions });
+            return Ok(new { Success = true, Diaries = diaries });
         }
 
         [HttpPost("create")]
-        public IActionResult CreateEmotion(float percentage)
+        public IActionResult CreateDiary([FromBody] CreateDiary diary)
         {
             try
             {
@@ -62,9 +64,9 @@ namespace Emotional.Api.Controllers
                         });
                 }
 
-                var emotion = _emotionService.CreateEmotion(percentage, _userAppContext.CurrentUserId);
+                var diaryObj = _diaryService.CreateDiary(diary, _userAppContext.CurrentUserId);
 
-                return Ok(new { Success = true, Emotion = emotion });
+                return Ok(new { Success = true, Diary = diaryObj });
             }
             catch (ApplicationException e)
             {
@@ -73,7 +75,7 @@ namespace Emotional.Api.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult UpdateEmotion([FromBody] UpdateEmotion emotion)
+        public IActionResult UpdateEmotion([FromBody] UpdateDiary diary)
         {
             try
             {
@@ -86,9 +88,9 @@ namespace Emotional.Api.Controllers
                         });
                 }
 
-                var updatedEmotion = _emotionService.UpdateEmotion(emotion.EmotionId, emotion.Percentage, _userAppContext.CurrentUserId);
+                var diaryObj = _diaryService.UpdateDiary(diary, _userAppContext.CurrentUserId);
 
-                return Ok(new { Success = true, Emotion = updatedEmotion });
+                return Ok(new { Success = true, Diary = diaryObj });
             }
             catch (ApplicationException e)
             {
