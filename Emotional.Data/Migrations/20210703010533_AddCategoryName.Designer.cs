@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Emotional.Data.Migrations
 {
     [DbContext(typeof(EmotionalDbContext))]
-    [Migration("20210701120524_UpdateCategoryEnum")]
-    partial class UpdateCategoryEnum
+    [Migration("20210703010533_AddCategoryName")]
+    partial class AddCategoryName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,8 +27,10 @@ namespace Emotional.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
+                    b.Property<byte>("Category")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
@@ -50,11 +52,11 @@ namespace Emotional.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("66a9ef91-ca1c-4eaa-812a-4e0f166c1053"),
-                            Category = "HAPPY",
+                            Id = new Guid("6846c40c-48a0-4529-8126-9d324b0917e8"),
+                            Category = (byte)0,
                             Content = "Today is a good day.",
-                            CreatedOn = new DateTime(2021, 7, 1, 12, 5, 24, 272, DateTimeKind.Utc).AddTicks(1753),
-                            UserId = new Guid("3a5a4a27-b0cc-4c17-bf1f-a97b79888c9c")
+                            CreatedOn = new DateTime(2021, 7, 3, 1, 5, 32, 671, DateTimeKind.Utc).AddTicks(5783),
+                            UserId = new Guid("10713172-9b96-4e83-bab8-45d3c4c23b96")
                         });
                 });
 
@@ -64,7 +66,10 @@ namespace Emotional.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
+                    b.Property<byte>("Category")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -86,11 +91,12 @@ namespace Emotional.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b3033c02-7849-451a-b34c-3d2306f6401d"),
-                            Category = "PEACEFUL",
-                            CreatedOn = new DateTime(2021, 7, 1, 12, 5, 24, 272, DateTimeKind.Utc).AddTicks(80),
+                            Id = new Guid("4e0494cf-cbe9-4e74-85bc-9954a5f6cbe7"),
+                            Category = (byte)5,
+                            CategoryName = "PEACEFUL",
+                            CreatedOn = new DateTime(2021, 7, 3, 1, 5, 32, 671, DateTimeKind.Utc).AddTicks(3172),
                             Percentage = 70f,
-                            UserId = new Guid("3a5a4a27-b0cc-4c17-bf1f-a97b79888c9c")
+                            UserId = new Guid("10713172-9b96-4e83-bab8-45d3c4c23b96")
                         });
                 });
 
@@ -100,7 +106,10 @@ namespace Emotional.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
+                    b.Property<byte>("Category")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -118,8 +127,9 @@ namespace Emotional.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("76850e5c-38e9-4ea7-92e3-046e0a12bada"),
-                            Category = "PEACEFUL",
+                            Id = new Guid("2d106c65-5430-4ac8-a5d1-39b27c928715"),
+                            Category = (byte)5,
+                            CategoryName = "PEACEFUL",
                             MusicUrl = "https://freesound.org/data/previews/554/554415_2975501-lq.mp3",
                             Name = "Peaceful-sound-001"
                         });
@@ -155,9 +165,9 @@ namespace Emotional.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a5a4a27-b0cc-4c17-bf1f-a97b79888c9c"),
+                            Id = new Guid("10713172-9b96-4e83-bab8-45d3c4c23b96"),
                             Email = "Emotional@gmail.com",
-                            HashPassword = "AQAAAAEAACcQAAAAEH2W6nOQOkg6ugEx9xy9jfJ2/cYMxcT3Oav12rY4cr/EmFqSqT+LvTVURl0solClZQ==",
+                            HashPassword = "AQAAAAEAACcQAAAAEC0r18UxVUy4PZ93ScHl5th5VvPlhdoBIhlpn/8tJ/XF5O2a7RBQScI6c+AoUvUdhQ==",
                             Name = "Emotional"
                         });
                 });

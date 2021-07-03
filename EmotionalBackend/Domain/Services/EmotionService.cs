@@ -1,4 +1,5 @@
 ﻿using Emotional.Api.Domain.Contracts;
+using Emotional.Api.Domain.Models.Emotion;
 using Emotional.Common.Contracts;
 using Emotional.Common.Security;
 using Emotional.Data.Entities;
@@ -12,19 +13,16 @@ namespace Emotional.Api.Domain.Services
     public class EmotionService : IEmotionService
     {
         private IRepository<Emotion> _emotionRepository;
-        private readonly IUserAppContext _userAppContext;
 
-        public EmotionService(IRepository<Emotion> emotionRepository,
-            IUserAppContext userAppContext)
+        public EmotionService(IRepository<Emotion> emotionRepository)
         {
             _emotionRepository = emotionRepository;
-            _userAppContext = userAppContext;
         }
 
-        public List<Emotion> GetLastMonthEmotions()
+        public List<Emotion> GetEmotions(Duration duration, string userId)
         {
-            int lastMonth = DateTime.Now.AddMonths(-1).Month;
-            var emotions = _emotionRepository.FindMany(x => x.CreatedOn.Ticks >= lastMonth);
+            var fromDate = GetDateTimeFromDuration(duration);
+            var emotions = _emotionRepository.FindMany(x => x.UserId == Guid.Parse(userId) && x.CreatedOn >= fromDate);
 
             if (emotions == null)
             {
@@ -34,54 +32,37 @@ namespace Emotional.Api.Domain.Services
             return emotions;
         }
 
-        public List<Emotion> GetLastWeekEmotions()
-        {
-            int lastWeek = DateTime.Now.AddDays(-7).Day;
-            var emotions = _emotionRepository.FindMany(x => x.CreatedOn.Ticks >= lastWeek);
-
-            if (emotions == null)
-            {
-                return new List<Emotion>();
-            }
-
-            return emotions;
-        }
-
-        public List<Emotion> GetTodayEmotions()
-        {
-            int startOfDay = (int)DateTime.Today.Day;
-            var emotions = _emotionRepository.FindMany(x => x.CreatedOn.Ticks >= startOfDay);
-
-            if (emotions == null)
-            {
-                return new List<Emotion>();
-            }
-
-            return emotions;
-        }
-
-        public void CreateEmotion(float percentage)
+        public Emotion CreateEmotion(float percentage, string userId)
         {
             try
             {
+                var userIdGuid = Guid.Parse(userId);
+
+                ValidateEmotionLimitation(userIdGuid);
+
+                var category = Helper.PercentageToCategory(percentage);
+
                 var emotion = new Emotion
                 {
                     Id = Guid.NewGuid(),
-                    Percentage = percentage,
-                    Category = Helper.PercentageToCategory(percentage),
+                    UserId = userIdGuid,
                     CreatedOn = DateTime.UtcNow,
-                    UserId = Guid.Parse(_userAppContext.CurrentUserId),
+                    Percentage = percentage,
+                    Category = category,
+                    CategoryName = category.ToString()
                 };
 
                 _emotionRepository.Add(emotion);
+
+                return emotion;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                throw new ApplicationException("Cannot create emotion");
+                throw new ApplicationException(ex.Message);
             }
         }
 
-        public void UpdateEmotion(string emotionId, float percentage)
+        public Emotion UpdateEmotion(string emotionId, float percentage, string userId)
         {
             try
             {
@@ -92,19 +73,61 @@ namespace Emotional.Api.Domain.Services
                     throw new ApplicationException("The emotion cannot be found.");
                 }
 
-                if (emotion.UserId.ToString() != _userAppContext.CurrentUserId)
+                if (emotion.UserId.ToString() != userId)
                 {
-                    throw new ApplicationException("Unauthorised Request.");
+                    throw new ApplicationException("Unauthorised Request - This emotion does not belong to the user.");
                 }
 
                 emotion.Percentage = percentage;
                 emotion.Category = Helper.PercentageToCategory(percentage);
+                emotion.CategoryName = emotion.Category.ToString();
                 _emotionRepository.CommitChanges();
+
+                return emotion;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new ApplicationException("Cannot update emotion.");
+                throw new ApplicationException(ex.Message);
             }
         }
+
+        #region Helpers
+
+        public DateTime GetDateTimeFromDuration(Duration duration)
+        {
+            switch (duration)
+            {
+                case Duration.TODAY:
+                    return DateTime.Today;
+
+                case Duration.LASTWEEK:
+                    return StartOfWeek();
+
+                default:
+                    return StartOfMonth();
+            }
+        }
+
+        public DateTime StartOfWeek()
+        {
+            return DateTime.UtcNow.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek);
+        }
+
+        public DateTime StartOfMonth()
+        {
+            return new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+        }
+
+        public void ValidateEmotionLimitation(Guid userIdGuid)
+        {
+            var todayEmotions = _emotionRepository.FindMany(x => x.UserId == userIdGuid && x.CreatedOn >= DateTime.Today);
+
+            if (todayEmotions.Count == 2)
+            {
+                throw new ApplicationException("Cannot create more than 2 emotions in a day!");
+            }
+        }
+
+        #endregion
     }
 }

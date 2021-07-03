@@ -7,9 +7,10 @@ namespace Emotional.Data.Entities
     {
         public Guid Id { set; get; }
         public float Percentage { set; get; }
-        public DateTime CreatedOn { set; get; }
+        public string CategoryName { set; get; }
         public EmotionCategory Category { set; get; }
-        
+        public DateTime CreatedOn { set; get; }
+
         public Guid UserId { set; get; }
         public User User { set; get; }
     }

@@ -28,6 +28,7 @@ namespace Emotional.Data.Extensions
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 Category = EmotionCategory.PEACEFUL,
+                CategoryName = EmotionCategory.PEACEFUL.ToString(),
                 Percentage = 70,
                 CreatedOn = DateTime.UtcNow
             });
@@ -44,6 +45,7 @@ namespace Emotional.Data.Extensions
             {
                 Id = Guid.NewGuid(),
                 Category = EmotionCategory.PEACEFUL,
+                CategoryName = EmotionCategory.PEACEFUL.ToString(),
                 MusicUrl = "https://freesound.org/data/previews/554/554415_2975501-lq.mp3",
                 Name = "Peaceful-sound-001"
             });

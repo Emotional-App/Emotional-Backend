@@ -16,8 +16,6 @@ namespace Emotional.Data.Configurations
             builder.HasOne(x => x.User).WithMany(x => x.Diaries).HasForeignKey(x => x.UserId);
 
             builder.Property(x => x.Content).IsRequired();
-            builder.Property(e => e.Category).HasConversion(v => v.ToString(),
-                v => (EmotionCategory)Enum.Parse(typeof(EmotionCategory), v));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Emotional.Data.Configurations
             builder.HasOne(x => x.User).WithMany(x => x.Emotions).HasForeignKey(x => x.UserId);
 
             builder.Property(x => x.Percentage).IsRequired();
-            builder.Property(e => e.Category).HasConversion(v => v.ToString(), 
-                v => (EmotionCategory)Enum.Parse(typeof(EmotionCategory), v));
+            builder.Property(e => e.Category).IsRequired();
+            builder.Property(e => e.CategoryName).IsRequired();
         }
     }
 }

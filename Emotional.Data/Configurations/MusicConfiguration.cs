@@ -16,8 +16,8 @@ namespace Emotional.Data.Configurations
 
             builder.Property(x => x.MusicUrl).IsRequired();
             builder.Property(x => x.Category).IsRequired();
-            builder.Property(e => e.Category).HasConversion(v => v.ToString(),
-                v => (EmotionCategory)Enum.Parse(typeof(EmotionCategory), v));
+            builder.Property(e => e.Category).IsRequired();
+            builder.Property(e => e.CategoryName).IsRequired();
         }
     }
 }
