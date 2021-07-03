@@ -1,4 +1,4 @@
-﻿using Emotional.Api.Domain.Models.Emotion;
+﻿using Emotional.Api.Domain.Models.Enums;
 using Emotional.Data.Entities;
 using System.Collections.Generic;
 

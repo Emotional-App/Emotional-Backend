@@ -1,12 +1,10 @@
 ﻿using Emotional.Api.Domain.Contracts;
-using Emotional.Api.Domain.Models.Emotion;
+using Emotional.Api.Domain.Models.Enums;
 using Emotional.Common.Contracts;
-using Emotional.Common.Security;
+using Emotional.Common.Services;
 using Emotional.Data.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Emotional.Api.Domain.Services
 {
@@ -101,21 +99,11 @@ namespace Emotional.Api.Domain.Services
                     return DateTime.Today;
 
                 case Duration.LASTWEEK:
-                    return StartOfWeek();
+                    return Helper.StartOfWeek();
 
                 default:
-                    return StartOfMonth();
+                    return Helper.StartOfMonth();
             }
-        }
-
-        public DateTime StartOfWeek()
-        {
-            return DateTime.UtcNow.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek);
-        }
-
-        public DateTime StartOfMonth()
-        {
-            return new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
         }
 
         public void ValidateEmotionLimitation(Guid userIdGuid)

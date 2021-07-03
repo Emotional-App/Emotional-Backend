@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Emotional.Api.Domain.Models.Emotion
+namespace Emotional.Api.Domain.Models.Enums
 {
     public enum Duration
     {
-        TODAY, LASTWEEK, LASTMONTH
+        TODAY, LASTWEEK, LASTMONTH, ALLTIME
     }
 }

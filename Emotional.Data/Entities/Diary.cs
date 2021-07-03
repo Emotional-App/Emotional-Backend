@@ -7,8 +7,8 @@ namespace Emotional.Data.Entities
     {
         public Guid Id { set; get; }
         public string Content{ set; get; }
-        public string CategoryName { set; get; }
-        public EmotionCategory Category { set; get; }
+        public string? CategoryName { set; get; }
+        public EmotionCategory? Category { set; get; }
         public DateTime CreatedOn { set; get; }
 
         public Guid UserId { set; get; }
