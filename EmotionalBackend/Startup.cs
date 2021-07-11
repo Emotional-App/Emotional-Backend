@@ -22,7 +22,7 @@ namespace EmotionalBackend
 {
     public class Startup
     {
-        private readonly string[] origins = { "http://localhost:3000" };
+        private readonly string origins = "http://localhost:3000";
 
         public Startup(IConfiguration configuration)
         {
@@ -31,17 +31,25 @@ namespace EmotionalBackend
 
         public IConfiguration Configuration { get; }
 
+        private readonly string corsPolicy = "AllowOrigins";
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(Constants.CorsPolicies,
+                options.AddPolicy(corsPolicy,
                     builder =>
                     {
-                        builder.WithOrigins(origins);
+                        builder.AllowAnyOrigin();
                         builder.AllowAnyHeader();
                         builder.AllowAnyMethod();
                     });
+            });
+
+            services.AddMvc().AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.PropertyNamingPolicy = null;
+                o.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
 
             services.AddDbContext<EmotionalDbContext>(options => 
@@ -78,23 +86,22 @@ namespace EmotionalBackend
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
+
+            app.UseCors(corsPolicy);
+
+            app.UseAuthorization();
+
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
             });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
