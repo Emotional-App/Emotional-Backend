@@ -10,6 +10,5 @@ namespace Emotional.Api.Domain.Models.Auth
         public string UserName { set; get; }
         public string Email { set; get; }
         public string Password { set; get; }
-        public bool isAgreeTerms { set; get; }
     }
 }
