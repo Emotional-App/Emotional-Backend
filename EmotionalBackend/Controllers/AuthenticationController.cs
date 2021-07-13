@@ -55,7 +55,7 @@ namespace Emotional.Api.Controllers
             }
             catch (ApplicationException e)
             {
-                return BadRequest(new { e.Message });
+                return BadRequest(new { Message = e.Message });
             }
             catch (Exception e)
             {
