@@ -7,10 +7,17 @@ namespace Emotional.Common.Services
 {
     public class Helper
     {
-        private const float EMOTION_GAP = 12.5f;
+        private const float TOTAL_PERCENTAGE = 100f;
+        private const int EMOTIONAL_CATEGORY_LENGTH = 8;
+        private const float EMOTION_GAP = TOTAL_PERCENTAGE / EMOTIONAL_CATEGORY_LENGTH;
 
         public static EmotionCategory PercentageToCategory(float percentage)
         {
+            if (percentage == TOTAL_PERCENTAGE)
+            {
+                return EmotionCategory.INLOVE;
+            }
+
             return (EmotionCategory)(int)(percentage / EMOTION_GAP);
         }
 
